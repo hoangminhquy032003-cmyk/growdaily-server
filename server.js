@@ -2,19 +2,17 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-
-// Import router với đường dẫn tương đối
 const journalRoutes = require("./routes/journal");
 
 dotenv.config();
 
 const app = express();
 
-// ✅ Cấu hình CORS cho local và domain deploy
+// ✅ Cấu hình CORS
 app.use(cors({
   origin: [
     "http://localhost:3000", // local dev
-    "https://growdaily-client.vercel.app" // domain frontend trên Vercel
+    "https://growdaily-client-783.vercel.app" // domain frontend trên Vercel
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
@@ -23,7 +21,18 @@ app.use(cors({
 // ✅ Middleware parse JSON
 app.use(express.json());
 
+// ✅ Middleware log request để debug
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`, req.body);
+  next();
+});
+
 // ✅ Kết nối MongoDB
+if (!process.env.MONGODB_URI) {
+  console.error("❌ Chưa cấu hình MONGODB_URI trong biến môi trường");
+  process.exit(1);
+}
+
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
