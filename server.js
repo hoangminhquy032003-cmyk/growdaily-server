@@ -12,7 +12,7 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:3000", // local dev
-    "https://growdaily-client-783.vercel.app" // domain frontend trên Vercel
+    "https://growdaily-client-73s3.vercel.app" // domain frontend trên Vercel
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
