@@ -8,11 +8,13 @@ dotenv.config();
 
 const app = express();
 
-// ✅ Cấu hình CORS
+// ✅ Cấu hình CORS — thêm tất cả domain frontend bạn đang dùng
 app.use(cors({
   origin: [
     "http://localhost:3000", // local dev
-    "https://growdaily-client-73s3.vercel.app" // domain frontend trên Vercel
+    "https://growdaily-client-73s3.vercel.app",
+    "https://growdaily-client-7s33.vercel.app",
+    "https://growdaily-client-78a.vercel.app"
   ],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
@@ -23,7 +25,7 @@ app.use(express.json());
 
 // ✅ Middleware log request để debug
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`, req.body);
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`, req.body);
   next();
 });
 
