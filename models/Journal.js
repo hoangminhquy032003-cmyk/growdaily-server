@@ -1,9 +1,13 @@
-const mongoose = require("mongoose");
+// models/Journal.js
+const mongoose = require('mongoose');
 
-const journalSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  content: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now }
-});
+const journalSchema = new mongoose.Schema(
+  {
+    title: { type: String, required: true, trim: true },
+    content: { type: String, required: true, trim: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+  },
+  { timestamps: { createdAt: 'createdAt', updatedAt: 'updatedAt' } }
+);
 
-module.exports = mongoose.model("Journal", journalSchema);
+module.exports = mongoose.model('Journal', journalSchema);
